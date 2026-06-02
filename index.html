@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>赤尾 · 薄系列 | 红科技极致薄 — 电商详情页</title>
+<meta name="description" content="赤尾薄系列电商详情页 - 28μm超薄打破日本45年垄断，聚氨酯001极限薄度，制药级国货品质">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   DESIGN TOKEN SYSTEM — 赤尾薄系列 · 红科技
+   ============================================ */
+:root{
+  /* Brand Colors */
+  --brand-red:#C8102E;
+  --brand-red-dark:#8B0E20;
+  --brand-red-glow:#FF3B4E;
+  --brand-gold:#C9A84C;
+  --brand-gold-light:#E8D59E;
+  /* Backgrounds */
+  --bg-deep:#060608;
+  --bg-dark:#0D0D10;
+  --bg-card:rgba(255,255,255,.025);
+  --bg-card-hover:rgba(255,255,255,.045);
+  /* Text */
+  --text-primary:#FFFFFF;
+  --text-secondary:rgba(255,255,255,.75);
+  --text-tertiary:rgba(255,255,255,.45);
+  --text-inverse:#0D0D10;
+  /* Accents */
+  --border-subtle:rgba(255,255,255,.07);
+  --border-medium:rgba(255,255,255,.12);
+  --shadow-red:0 0 60px rgba(200,16,46,.25);
+  --shadow-red-strong:0 0 100px rgba(200,16,46,.4);
+  /* Spacing Scale (4px base) */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
+  --space-6:24px; --space-8:32px; --space-10:40px; --space-12:48px;
+  --space-16:64px; --space-20:80px; --space-24:96px;
+  /* Typography */
+  --font-display:'Noto Serif SC',serif;
+  --font-body:'Noto Sans SC',system-ui,-apple-system,sans-serif;
+  /* Layout */
+  --container:1200px;
+  --section-pad:var(--space-24) 5%;
+  --radius-sm:4px; --radius-md:8px; --radius-lg:16px; --radius-xl:24px;
+  /* Easing */
+  --ease-out-expo:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  font-family:var(--font-body);
+  background:var(--bg-deep);
+  color:var(--text-primary);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+
+/* Noise overlay */
+body::after{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+.display-xl{
+  font-family:var(--font-display);
+  font-size:clamp(3rem,6vw,5.5rem);
+  font-weight:900;
+  line-height:1.08;
+  letter-spacing:-.02em;
+}
+.display-lg{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,3.5vw,3.2rem);
+  font-weight:900;
+  line-height:1.2;
+}
+.heading-section{
+  font-family:var(--font-display);
+  font-size:clamp(1.6rem,2.5vw,2.4rem);
+  font-weight:700;
+  line-height:1.35;
+}
+.accent-label{
+  font-size:.7rem;
+  font-weight:500;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+.body-text{font-size:clamp(.9rem,1.1vw,1.05rem);line-height:2;font-weight:300}
+
+/* Gradient text */
+.text-gradient{
+  background:linear-gradient(135deg,var(--brand-red-glow),var(--brand-red),var(--brand-gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+.container{max-width:var(--container);margin:0 auto;padding:0 var(--space-6)}
+.text-center{text-align:center}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Tag chips */
+.tag{display:inline-flex;align-items:center;gap:var(--space-1);padding:var(--space-1) var(--space-3);border:1px solid rgba(200,16,46,.35);color:var(--brand-red-glow);font-size:.7rem;letter-spacing:2px;border-radius:50px;font-weight:500}
+.tag-award{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);background:rgba(200,16,46,.1);border:1px solid rgba(200,16,46,.2);font-size:.75rem;color:var(--brand-gold-light);border-radius:var(--radius-sm)}
+
+/* Buttons */
+.btn-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+  padding:var(--space-3) var(--space-8);
+  background:linear-gradient(135deg,var(--brand-red),var(--brand-red-dark));
+  color:#fff;border:none;border-radius:var(--radius-sm);
+  font-size:.95rem;font-weight:600;cursor:pointer;
+  transition:all .3s var(--ease-out-expo);
+  text-decoration:none;font-family:var(--font-body);
+  min-height:48px;
+  box-shadow:0 4px 24px rgba(200,16,46,.3);
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 40px rgba(200,16,46,.5);
+  filter:brightness(1.1);
+}
+.btn-primary:focus-visible{outline:2px solid var(--brand-red-glow);outline-offset:3px}
+
+.btn-outline{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+  padding:var(--space-3) var(--space-8);
+  background:transparent;color:#fff;
+  border:1px solid var(--border-medium);border-radius:var(--radius-sm);
+  font-size:.95rem;font-weight:500;cursor:pointer;
+  transition:all .3s var(--ease-out-expo);
+  text-decoration:none;font-family:var(--font-body);
+  min-height:48px;
+}
+.btn-outline:hover{
+  border-color:var(--brand-red);
+  background:rgba(200,16,46,.08);
+  transform:translateY(-2px);
+}
+.btn-outline:focus-visible{outline:2px solid var(--brand-red-glow);outline-offset:3px}
+
+/* ============================================
+   REVEAL ANIMATION
+   ============================================ */
+.reveal{opacity:0;transform:translateY(36px);transition:all .8s var(--ease-out-expo)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.08s}.reveal-d2{transition-delay:.16s}
+.reveal-d3{transition-delay:.24s}.reveal-d4{transition-delay:.32s}
+.reveal-d5{transition-delay:.4s}
+
+/* ============================================
+   HERO — TECH TITAN
+   ============================================ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;align-items:center;
+  background:linear-gradient(170deg,#060608 0%,#0f0809 30%,#0a0809 55%,#060608 80%);
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;top:-30%;left:50%;transform:translateX(-50%);
+  width:900px;height:900px;
+  background:radial-gradient(circle,rgba(200,16,46,.15) 0%,transparent 60%);
+  animation:heroBreath 6s ease-in-out infinite;
+}
+@keyframes heroBreath{
+  0%,100%{transform:translateX(-50%) scale(1);opacity:.6}
+  50%{transform:translateX(-50%) scale(1.15);opacity:1}
+}
+.hero::after{
+  content:'';
+  position:absolute;bottom:-10%;right:-15%;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(201,168,76,.06) 0%,transparent 60%);
+}
+.hero-grid{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:1fr 1fr;
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 var(--space-6);
+  gap:var(--space-16);
+  align-items:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  padding:var(--space-2) var(--space-4);
+  background:rgba(200,16,46,.12);
+  border:1px solid rgba(200,16,46,.25);
+  border-radius:50px;
+  font-size:.75rem;color:var(--brand-red-glow);
+  letter-spacing:2px;margin-bottom:var(--space-6);
+  animation:fadeIn .8s ease both;
+}
+.hero-desc{
+  font-size:1.05rem;color:var(--text-secondary);line-height:2;
+  max-width:480px;margin-bottom:var(--space-8);font-weight:300;
+}
+.hero-cta-group{display:flex;gap:var(--space-3);flex-wrap:wrap}
+.hero-stat-row{
+  display:flex;gap:var(--space-12);
+  margin-top:var(--space-10);
+  padding-top:var(--space-8);
+  border-top:1px solid var(--border-subtle);
+}
+.hero-stat-val{
+  font-family:var(--font-display);
+  font-size:2rem;font-weight:900;
+  color:var(--brand-red-glow);
+  line-height:1;
+}
+.hero-stat-lbl{font-size:.75rem;color:var(--text-tertiary);margin-top:var(--space-1)}
+
+/* Hero product */
+.hero-product-wrap{
+  position:relative;
+  display:flex;justify-content:center;align-items:center;
+  min-height:500px;
+}
+.hero-product-glow{
+  position:absolute;
+  width:100%;height:100%;
+  background:radial-gradient(ellipse at center,rgba(200,16,46,.2) 0%,transparent 65%);
+  animation:productPulse 4s ease-in-out infinite;
+}
+@keyframes productPulse{
+  0%,100%{transform:scale(1);opacity:.5}
+  50%{transform:scale(1.25);opacity:.85}
+}
+.hero-product-img{
+  position:relative;z-index:2;
+  max-width:380px;width:100%;height:auto;
+  filter:drop-shadow(0 30px 80px rgba(200,16,46,.25));
+  animation:floatSlow 7s ease-in-out infinite;
+}
+@keyframes floatSlow{
+  0%,100%{transform:translateY(0) rotate(-.5deg)}
+  50%{transform:translateY(-16px) rotate(.5deg)}
+}
+.hero-floating-tag{
+  position:absolute;z-index:3;
+  padding:var(--space-2) var(--space-4);
+  background:rgba(0,0,0,.85);backdrop-filter:blur(16px);
+  border:1px solid rgba(201,168,76,.3);border-radius:var(--radius-md);
+  font-size:.8rem;color:var(--brand-gold-light);
+}
+.hero-floating-tag.t1{top:8%;right:2%;animation:tagFloat 5s ease-in-out infinite}
+.hero-floating-tag.t2{bottom:18%;left:0;animation:tagFloat 5s ease-in-out infinite 1.2s}
+@keyframes tagFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* ============================================
+   STRIP SECTION — AWARDS / TRUST
+   ============================================ */
+.strip{
+  padding:var(--space-6) 5%;
+  background:linear-gradient(90deg,rgba(200,16,46,.06),rgba(200,16,46,.12),rgba(200,16,46,.06));
+  border-top:1px solid rgba(200,16,46,.1);
+  border-bottom:1px solid rgba(200,16,46,.1);
+}
+.strip-row{
+  display:flex;justify-content:center;align-items:center;gap:var(--space-8);
+  flex-wrap:wrap;max-width:var(--container);margin:0 auto;
+}
+.strip-item{
+  display:flex;align-items:center;gap:var(--space-2);
+  font-size:.8rem;color:var(--text-secondary);
+}
+.strip-dot{width:6px;height:6px;background:var(--brand-red);border-radius:50%}
+
+/* ============================================
+   TECH HIGHLIGHT — 28μm DRAMA
+   ============================================ */
+.tech-spotlight{
+  padding:var(--section-pad);
+  background:var(--bg-dark);
+}
+.spotlight-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:var(--space-20);align-items:center;
+  max-width:var(--container);margin:0 auto;
+}
+.spotlight-visual{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  aspect-ratio:1;
+}
+.spotlight-ring-container{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.spotlight-ring{
+  position:absolute;
+  border:1px solid rgba(200,16,46,.12);
+  border-radius:50%;
+  animation:ringBreathe 6s ease-in-out infinite;
+}
+.spotlight-ring:nth-child(1){width:55%;height:55%;animation-delay:0s}
+.spotlight-ring:nth-child(2){width:75%;height:75%;animation-delay:1.5s}
+.spotlight-ring:nth-child(3){width:95%;height:95%;animation-delay:3s}
+@keyframes ringBreathe{
+  0%,100%{transform:scale(1);opacity:.25}
+  50%{transform:scale(1.06);opacity:.55}
+}
+.spotlight-number{
+  font-family:var(--font-display);
+  font-size:clamp(4.5rem,10vw,8rem);
+  font-weight:900;
+  background:linear-gradient(180deg,var(--brand-red-glow) 0%,var(--brand-red) 40%,var(--brand-gold) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  position:relative;z-index:2;
+  line-height:1;
+}
+.spotlight-unit{font-size:1.8rem;color:var(--text-secondary);-webkit-text-fill-color:var(--text-secondary);margin-left:var(--space-2)}
+.spotlight-sub{font-size:.85rem;color:var(--text-tertiary);margin-top:var(--space-4);text-align:center}
+.spotlight-callout{
+  display:inline-flex;align-items:flex-start;gap:var(--space-3);
+  padding:var(--space-4) var(--space-6);
+  background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-md);
+  margin-top:var(--space-6);
+}
+.spotlight-callout-icon{font-size:1.5rem;flex-shrink:0}
+.spotlight-callout p{font-size:.85rem;color:var(--text-secondary);line-height:1.7}
+
+/* ============================================
+   FEATURE CARDS — 3 COL
+   ============================================ */
+.features-section{padding:var(--section-pad);background:var(--bg-deep)}
+.features-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:var(--space-6);max-width:var(--container);margin:0 auto;
+}
+.feature-card{
+  padding:var(--space-10) var(--space-8);
+  background:var(--bg-card);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--radius-lg);
+  position:relative;
+  transition:all .45s var(--ease-out-expo);
+  cursor:default;
+}
+.feature-card::before{
+  content:'';position:absolute;top:0;left:0;
+  width:100%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--brand-red),var(--brand-gold),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .45s var(--ease-out-expo);
+}
+.feature-card:hover::before{transform:scaleX(1)}
+.feature-card:hover{
+  border-color:rgba(200,16,46,.2);
+  background:var(--bg-card-hover);
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-red);
+}
+.feature-card-icon{font-size:2.2rem;margin-bottom:var(--space-4);display:block}
+.feature-card h3{font-size:1.1rem;font-weight:700;margin-bottom:var(--space-2)}
+.feature-card p{font-size:.88rem;color:var(--text-secondary);line-height:1.8}
+
+/* ============================================
+   PRODUCT GALLERY
+   ============================================ */
+.gallery-section{padding:var(--section-pad);background:var(--bg-dark)}
+.gallery-grid{
+  display:grid;grid-template-columns:2fr 1fr;
+  gap:var(--space-6);max-width:var(--container);margin:0 auto;
+}
+.gallery-main{
+  position:relative;
+  background:linear-gradient(160deg,rgba(200,16,46,.05),rgba(0,0,0,.3));
+  border:1px solid var(--border-subtle);border-radius:var(--radius-lg);
+  overflow:hidden;
+  aspect-ratio:4/3;
+  display:flex;align-items:center;justify-content:center;
+  cursor:zoom-in;
+  transition:all .4s;
+}
+.gallery-main:hover{box-shadow:var(--shadow-red-strong)}
+.gallery-main img{
+  max-width:70%;max-height:70%;
+  object-fit:contain;
+  transition:transform .6s var(--ease-out-expo);
+}
+.gallery-main:hover img{transform:scale(1.15)}
+.gallery-thumbs{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);
+  align-self:start;
+}
+.gallery-thumb{
+  background:var(--bg-card);border:1px solid var(--border-subtle);
+  border-radius:var(--radius-md);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  padding:var(--space-4);
+  cursor:pointer;
+  transition:all .3s;
+  aspect-ratio:1;
+}
+.gallery-thumb:hover,.gallery-thumb.active{
+  border-color:var(--brand-red);background:rgba(200,16,46,.05);
+  box-shadow:0 0 24px rgba(200,16,46,.15);
+}
+.gallery-thumb img{max-width:80%;max-height:80%;object-fit:contain}
+
+/* ============================================
+   COMPARISON TABLE
+   ============================================ */
+.vs-section{padding:var(--section-pad);background:linear-gradient(180deg,rgba(200,16,46,.03) 0%,transparent 100%)}
+.vs-table{
+  width:100%;max-width:var(--container);margin:0 auto;
+  border-collapse:separate;border-spacing:0;
+}
+.vs-table thead th{
+  padding:var(--space-4) var(--space-6);
+  text-align:left;font-size:.75rem;font-weight:700;letter-spacing:1px;
+  background:rgba(200,16,46,.08);
+  border-bottom:2px solid rgba(200,16,46,.2);
+}
+.vs-table thead th.highlight-col{
+  background:rgba(200,16,46,.15);
+  color:var(--brand-red-glow);
+}
+.vs-table tbody td{
+  padding:var(--space-4) var(--space-6);
+  font-size:.9rem;border-bottom:1px solid var(--border-subtle);
+}
+.vs-table tbody td:first-child{color:var(--text-secondary);font-weight:500}
+.vs-table .win{color:var(--brand-red-glow);font-weight:700}
+.vs-table .win::before{content:'✓ ';color:var(--brand-gold)}
+
+/* ============================================
+   TIMELINE — 跟跑到领跑
+   ============================================ */
+.timeline-section{padding:var(--section-pad);background:var(--bg-dark)}
+.timeline-track{
+  position:relative;max-width:700px;margin:0 auto;
+}
+.timeline-line{
+  position:absolute;left:50%;top:0;bottom:0;width:1px;
+  background:linear-gradient(180deg,transparent,var(--brand-red),var(--brand-gold),transparent);
+  transform:translateX(-50%);
+}
+.timeline-item{
+  position:relative;
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);
+  margin-bottom:var(--space-10);
+  align-items:start;
+}
+.timeline-item:nth-child(odd) .timeline-content{text-align:right;padding-right:var(--space-10)}
+.timeline-item:nth-child(even) .timeline-content{padding-left:var(--space-10);grid-column:2}
+.timeline-item:nth-child(even) .timeline-spacer{display:none}
+.timeline-dot{
+  position:absolute;left:50%;top:0;
+  width:14px;height:14px;
+  background:var(--brand-red);
+  border-radius:50%;
+  transform:translate(-50%,0);
+  box-shadow:0 0 20px rgba(200,16,46,.5);
+  z-index:2;
+}
+.timeline-year{
+  font-family:var(--font-display);
+  font-size:1.4rem;font-weight:900;color:var(--brand-red-glow);
+  margin-bottom:var(--space-1);
+}
+.timeline-content h4{font-size:1.05rem;font-weight:700;margin-bottom:var(--space-1)}
+.timeline-content p{font-size:.85rem;color:var(--text-secondary);line-height:1.7}
+.timeline-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;margin-bottom:var(--space-2);
+  border-radius:10px;
+  background:rgba(200,16,46,.1);
+  color:var(--brand-red-glow);
+}
+.timeline-item:nth-child(odd) .timeline-icon{margin-left:auto}
+
+
+/* ============================================
+   FAQ
+   ============================================ */
+.faq-section{padding:var(--section-pad);background:var(--bg-deep)}
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border-subtle)}
+.faq-q{
+  width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:var(--space-5) 0;background:none;border:none;color:#fff;
+  font-size:1rem;font-weight:500;cursor:pointer;text-align:left;
+  font-family:var(--font-body);
+  transition:color .3s;
+}
+.faq-q:hover{color:var(--brand-red-glow)}
+.faq-q[aria-expanded="true"]{color:var(--brand-red-glow)}
+.faq-q-icon{font-size:1.2rem;transition:transform .3s var(--ease-out-expo);flex-shrink:0;margin-left:var(--space-4)}
+.faq-q[aria-expanded="true"] .faq-q-icon{transform:rotate(45deg)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s var(--ease-out-expo),padding .4s;
+  font-size:.9rem;color:var(--text-secondary);line-height:1.9;
+}
+.faq-a[aria-hidden="false"]{max-height:400px;padding-bottom:var(--space-5)}
+
+/* ============================================
+   REVIEWS
+   ============================================ */
+.reviews-section{padding:var(--section-pad);background:var(--bg-dark)}
+.reviews-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);
+  max-width:var(--container);margin:0 auto;
+}
+.review-card{
+  padding:var(--space-8);
+  background:var(--bg-card);border:1px solid var(--border-subtle);
+  border-radius:var(--radius-lg);
+  position:relative;
+}
+.review-card::before{
+  content:'"';font-family:var(--font-display);
+  font-size:5rem;color:var(--brand-red);opacity:.08;
+  position:absolute;top:var(--space-2);left:var(--space-4);
+  line-height:1;
+}
+.review-stars{color:var(--brand-gold);letter-spacing:2px;margin-bottom:var(--space-4);font-size:.85rem}
+.review-text{font-size:.88rem;color:var(--text-secondary);line-height:1.9;margin-bottom:var(--space-4)}
+.review-author{font-size:.85rem;font-weight:600}
+.review-meta{font-size:.72rem;color:var(--text-tertiary);margin-top:var(--space-1)}
+
+/* ============================================
+   STICKY CTA BAR
+   ============================================ */
+.sticky-cta{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:rgba(6,6,8,.92);backdrop-filter:blur(20px);
+  border-top:1px solid rgba(200,16,46,.15);
+  padding:var(--space-3) 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:var(--space-4);
+  transform:translateY(100%);
+  transition:transform .4s var(--ease-out-expo);
+}
+.sticky-cta.visible{transform:translateY(0)}
+.sticky-cta-info{display:flex;align-items:center;gap:var(--space-3)}
+.sticky-cta-name{font-weight:700;font-size:.95rem}
+.sticky-cta-price{color:var(--brand-red-glow);font-weight:700;font-size:1.1rem}
+.sticky-cta-price small{font-size:.75rem;color:var(--text-tertiary);font-weight:400;text-decoration:line-through;margin-left:var(--space-2)}
+.sticky-cta .btn-primary{padding:var(--space-3) var(--space-6);white-space:nowrap}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer{
+  padding:var(--space-12) 5% var(--space-20);
+  text-align:center;background:var(--bg-deep);
+  border-top:1px solid var(--border-subtle);
+}
+.footer-links{display:flex;gap:var(--space-6);justify-content:center;flex-wrap:wrap;margin-bottom:var(--space-4)}
+.footer-links a{color:var(--text-tertiary);text-decoration:none;font-size:.8rem;transition:color .3s}
+.footer-links a:hover{color:var(--brand-red-glow)}
+.footer-copy{font-size:.72rem;color:var(--text-tertiary)}
+
+/* ===== READING PROGRESS BAR ===== */
+.progress-bar{
+  position:fixed;top:0;left:0;z-index:9998;
+  width:0%;height:3px;
+  background:linear-gradient(90deg,var(--brand-red),var(--brand-gold));
+  transition:width .2s var(--ease-out-expo);
+}
+/* ===== SOCIAL PROOF TOAST ===== */
+.social-proof{
+  position:fixed;bottom:80px;left:24px;z-index:99;
+  display:flex;flex-direction:column;gap:var(--space-2);
+  pointer-events:none;
+}
+.social-proof-item{
+  display:flex;align-items:center;gap:var(--space-3);
+  padding:var(--space-2) var(--space-4);
+  background:rgba(0,0,0,.85);backdrop-filter:blur(12px);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--radius-md);
+  font-size:.78rem;color:var(--text-secondary);
+  animation:slideInToast .5s var(--ease-out-expo) both;
+  white-space:nowrap;
+}
+.social-proof-item .avatar{
+  width:24px;height:24px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--brand-red),var(--brand-gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;color:#fff;flex-shrink:0;
+}
+.social-proof-item .action{color:var(--brand-gold-light);font-weight:600}
+.social-proof-remove{
+  animation:slideOutToast .4s var(--ease-out-expo) both;
+}
+@keyframes slideInToast{
+  from{transform:translateX(-120%);opacity:0}
+  to{transform:translateX(0);opacity:1}
+}
+@keyframes slideOutToast{
+  from{transform:translateX(0);opacity:1}
+  to{transform:translateX(-120%);opacity:0}
+}
+/* ===== STORE JUMP ===== */
+.store-jump{padding:var(--section-pad);background:var(--bg-dark)}
+.store-jump-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);
+  max-width:var(--container);margin:0 auto;
+}
+.store-card{
+  padding:var(--space-8);border-radius:var(--radius-lg);
+  border:1px solid var(--border-subtle);
+  text-decoration:none;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .4s var(--ease-out-expo);
+  position:relative;overflow:hidden;
+}
+.store-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.04),transparent);
+  pointer-events:none;
+}
+.store-card-tmall{background:linear-gradient(135deg,rgba(200,16,46,.15),rgba(200,16,46,.05))}
+.store-card-jd{background:linear-gradient(135deg,rgba(200,16,46,.1),transparent)}
+.store-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-red);
+  border-color:rgba(200,16,46,.3);
+}
+.store-card .store-name{font-size:1.2rem;font-weight:700;margin-bottom:var(--space-1)}
+.store-card .store-desc{font-size:.82rem;color:var(--text-secondary)}
+.store-card .store-arrow{font-size:1.5rem;color:var(--brand-red-glow)}
+/* ===== COUPON ===== */
+.coupon-section{padding:var(--section-pad);background:var(--bg-deep);text-align:center}
+.coupon-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);
+  max-width:600px;margin:var(--space-8) auto 0;
+}
+.coupon-card{
+  padding:var(--space-6) var(--space-4);
+  background:linear-gradient(135deg,rgba(200,16,46,.12),rgba(200,16,46,.02));
+  border:1px dashed rgba(200,16,46,.35);
+  border-radius:var(--radius-md);
+  position:relative;
+  transition:all .3s;
+}
+.coupon-card:hover{
+  background:rgba(200,16,46,.2);
+  transform:translateY(-2px);
+}
+.coupon-value{
+  font-family:var(--font-display);
+  font-size:1.8rem;font-weight:900;
+  color:var(--brand-red-glow);
+}
+.coupon-value small{font-size:.9rem;font-weight:400;color:var(--text-tertiary)}
+.coupon-label{font-size:.72rem;color:var(--text-secondary);margin-top:var(--space-1)}
+.coupon-tag{
+  position:absolute;top:-4px;right:-4px;
+  padding:2px 8px;background:var(--brand-red);
+  border-radius:2px;font-size:.55rem;color:#fff;
+}
+/* ===== PRODUCT PARAMS ===== */
+.params-section{padding:var(--section-pad);background:var(--bg-dark)}
+.params-table{
+  max-width:700px;margin:0 auto;width:100%;
+  border-collapse:collapse;
+}
+.params-table tr{border-bottom:1px solid var(--border-subtle)}
+.params-table td{
+  padding:var(--space-3) var(--space-4);
+  font-size:.88rem;line-height:1.7;
+}
+.params-table td:first-child{
+  color:var(--text-tertiary);
+  font-weight:500;
+  width:35%;
+}
+.params-table td:last-child{color:var(--text-secondary)}
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  :root{--section-pad:var(--space-16) 5%}
+  .hero-grid{grid-template-columns:1fr;gap:var(--space-8)}
+  .hero-product-wrap{order:-1;min-height:350px}
+  .hero-product-img{max-width:260px}
+  .hero-stat-row{gap:var(--space-6);flex-wrap:wrap}
+  .spotlight-grid{grid-template-columns:1fr;gap:var(--space-8)}
+  .features-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr}
+  .gallery-main{aspect-ratio:1}
+  .gallery-thumbs{grid-template-rows:none;grid-template-columns:repeat(4,1fr)}
+  .vs-table thead th,.vs-table tbody td{padding:var(--space-2) var(--space-3);font-size:.75rem}
+  .timeline-item{grid-template-columns:1fr;gap:var(--space-3)}
+  .timeline-item:nth-child(odd) .timeline-content{text-align:left;padding-right:0;padding-left:var(--space-8)}
+  .timeline-item:nth-child(even) .timeline-content{padding-left:var(--space-8);grid-column:auto}
+  .timeline-item:nth-child(even) .timeline-spacer{display:block}
+  .timeline-line{left:6px}
+  .timeline-dot{left:6px}
+  .reviews-grid{grid-template-columns:1fr}
+  .hero-floating-tag{display:none}
+  .sticky-cta-name{font-size:.85rem}
+  .store-jump-grid{grid-template-columns:1fr}
+  .coupon-grid{grid-template-columns:1fr}
+  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr !important}
+}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
+<!-- Social Proof Toast -->
+<div class="social-proof" id="socialProof" aria-live="polite" aria-label="实时购买动态"></div>
+
+<!-- ===== STICKY CTA BAR ===== -->
+<div class="sticky-cta" id="stickyCta" role="complementary" aria-label="固定购买栏">
+  <div class="sticky-cta-info">
+    <div class="sticky-cta-name">赤尾聚氨酯001</div>
+    <div class="sticky-cta-price">¥49.9 <small>¥89.9</small></div>
+  </div>
+  <a href="#" class="btn-primary" role="button" aria-label="立即购买">立即购买</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="top" aria-labelledby="hero-heading">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="hero-badge reveal" style="animation-delay:.1s">✦ 中国自研 · 红科技</div>
+      <h1 class="display-xl reveal reveal-d1" id="hero-heading">
+        突破<span class="text-gradient">45年</span><br>技术垄断
+      </h1>
+      <p class="hero-desc reveal reveal-d2">
+        赤尾聚氨酯001 — 28微米极限超薄，打破日本长达45年的乳胶薄度纪录。
+        从「跟跑」到「领跑」，让国货品质站在世界之巅。
+      </p>
+      <div class="hero-cta-group reveal reveal-d3">
+        <a href="#features" class="btn-primary">探索红科技</a>
+        <a href="#gallery" class="btn-outline">查看产品</a>
+      </div>
+      <div class="hero-stat-row reveal reveal-d4">
+        <div><div class="hero-stat-val">28μm</div><div class="hero-stat-lbl">极限超薄工艺</div></div>
+        <div><div class="hero-stat-val">15</div><div class="hero-stat-lbl">国家发明专利</div></div>
+        <div><div class="hero-stat-val">001</div><div class="hero-stat-lbl">聚氨酯极限薄度</div></div>
+      </div>
+    </div>
+    <div class="hero-product-wrap reveal reveal-d2">
+      <div class="hero-product-glow" aria-hidden="true"></div>
+      <img class="hero-product-img" src="images/products/bao/赤尾聚氨酯001-正.png" alt="赤尾聚氨酯001避孕套产品正面展示" width="380" loading="eager">
+      <div class="hero-floating-tag t1" aria-hidden="true">28μm 超薄</div>
+      <div class="hero-floating-tag t2" aria-hidden="true">聚氨酯 001</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRUST STRIP ===== -->
+<div class="strip reveal" aria-label="品牌荣誉栏">
+  <div class="strip-row">
+    <div class="strip-item"><span class="strip-dot" aria-hidden="true"></span>15项国家发明专利</div>
+    <div class="strip-item"><span class="strip-dot" aria-hidden="true"></span>入选《Men's Health》全球十大超薄</div>
+    <div class="strip-item"><span class="strip-dot" aria-hidden="true"></span>天猫年度科技创新品牌</div>
+    <div class="strip-item"><span class="strip-dot" aria-hidden="true"></span>制药级GMP生产标准</div>
+  </div>
+</div>
+
+<!-- ===== TECH SPOTLIGHT ===== -->
+<section class="tech-spotlight" id="tech" aria-labelledby="tech-heading">
+  <div class="spotlight-grid">
+    <div class="spotlight-visual reveal" aria-hidden="true">
+      <div class="spotlight-ring-container">
+        <div class="spotlight-ring"></div>
+        <div class="spotlight-ring"></div>
+        <div class="spotlight-ring"></div>
+      </div>
+      <div style="text-align:center;position:relative;z-index:2">
+        <div class="spotlight-number">28<span class="spotlight-unit">μm</span></div>
+        <div class="spotlight-sub">打破日本45年垄断纪录</div>
+      </div>
+    </div>
+    <div class="reveal reveal-d1">
+      <div class="tag">技术突破</div>
+      <h2 class="display-lg" id="tech-heading">28微米<br>改写全球薄度格局</h2>
+      <p class="body-text" style="margin-top:var(--space-6)">
+        赤尾铂金至薄系列以28微米超薄工艺，打破日本长达45年的乳胶薄度技术垄断，
+        入选《Men's Health》全球十大超薄避孕套。
+      </p>
+      <div class="spotlight-callout">
+        <span class="spotlight-callout-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--brand-gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg></span>
+        <p>全球十大超薄榜单唯一中国品牌 · 从「跟跑」到「领跑」的历史性跨越</p>
+      </div>
+      <p class="body-text" style="margin-top:var(--space-6)">
+        以前我们只能追赶国际标准，现在我们自己定义标准。这是中国智造在两性健康领域的里程碑。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="features-section" id="features" aria-labelledby="features-heading">
+  <div class="text-center" style="margin-bottom:var(--space-16)">
+    <div class="tag reveal">核心技术</div>
+    <h2 class="display-lg reveal reveal-d1" id="features-heading">赤尾红科技 · 硬核实力</h2>
+    <p class="body-text reveal reveal-d2" style="color:var(--text-tertiary);margin:var(--space-4) auto 0;max-width:500px">
+      四大核心技术体系，重新定义国产避孕套品质标准
+    </p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal reveal-d1">
+      <span class="feature-card-icon" aria-hidden="true"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--brand-red-glow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></span>
+      <h3>28μm 极限超薄</h3>
+      <p>突破性薄化工艺，薄至28微米的极致体验。打破日本45年乳胶薄度垄断，荣登全球十大超薄榜单。</p>
+    </div>
+    <div class="feature-card reveal reveal-d2">
+      <span class="feature-card-icon" aria-hidden="true"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--brand-red-glow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v6l4 8H5l4-8V3"/><path d="M9 3h6M7 17h10"/></svg></span>
+      <h3>聚氨酯001材质</h3>
+      <p>001极限薄度的高分子聚氨酯材料，兼具超高强度与极致薄感，导热性更佳，亲密更真实自然。</p>
+    </div>
+    <div class="feature-card reveal reveal-d3">
+      <span class="feature-card-icon" aria-hidden="true"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--brand-red-glow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></span>
+      <h3>制药级品控体系</h3>
+      <p>全系产品遵循药品研发与生产标准，以「实验室级严谨」保障每一只产品的品质与安全。</p>
+    </div>
+    <div class="feature-card reveal reveal-d1">
+      <span class="feature-card-icon" aria-hidden="true"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--brand-red-glow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg></span>
+      <h3>15项国家发明专利</h3>
+      <p>持续研发投入构建核心技术壁垒，建立独属中国的「赤尾红科技」硬核技术体系。</p>
+    </div>
+    <div class="feature-card reveal reveal-d2">
+      <span class="feature-card-icon" aria-hidden="true"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--brand-red-glow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+      <h3>防滑脱创新设计</h3>
+      <p>创新防滑脱结构设计，在极致薄度的同时确保使用安全，让亲密时刻更安心、更自由。</p>
+    </div>
+    <div class="feature-card reveal reveal-d3">
+      <span class="feature-card-icon" aria-hidden="true"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--brand-red-glow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>
+      <h3>多材质产品矩阵</h3>
+      <p>聚氨酯001、聚乙烯醇001等多材质布局，覆盖不同用户需求，推动品类持续创新升级。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCT GALLERY ===== -->
+<section class="gallery-section" id="gallery" aria-labelledby="gallery-heading">
+  <div class="text-center" style="margin-bottom:var(--space-12)">
+    <div class="tag reveal">产品展示</div>
+    <h2 class="display-lg reveal reveal-d1" id="gallery-heading">薄系列全家福</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-main reveal reveal-d1" id="galleryMain" role="img" aria-label="产品大图展示">
+      <img id="galleryMainImg" src="images/products/bao/赤尾聚氨酯001-正.png" alt="赤尾聚氨酯001正面" loading="eager">
+    </div>
+    <div class="gallery-thumbs reveal reveal-d2" id="galleryThumbs" role="tablist" aria-label="产品缩略图">
+      <div class="gallery-thumb active" data-src="images/products/bao/赤尾聚氨酯001-正.png" data-alt="赤尾聚氨酯001正面" role="tab" tabindex="0" aria-selected="true">
+        <img src="images/products/bao/赤尾聚氨酯001-正.png" alt="赤尾聚氨酯001正面缩略图" loading="lazy">
+      </div>
+      <div class="gallery-thumb" data-src="images/products/bao/赤尾聚氨酯001-侧.png" data-alt="赤尾聚氨酯001侧面" role="tab" tabindex="0" aria-selected="false">
+        <img src="images/products/bao/赤尾聚氨酯001-侧.png" alt="赤尾聚氨酯001侧面缩略图" loading="lazy">
+      </div>
+      <div class="gallery-thumb" data-src="images/products/bao/无套感3只装-正.png" data-alt="赤尾无套感正面" role="tab" tabindex="0" aria-selected="false">
+        <img src="images/products/bao/无套感3只装-正.png" alt="赤尾无套感正面缩略图" loading="lazy">
+      </div>
+      <!-- + more -->
+      <button class="gallery-thumb" data-src="images/products/bao/铂金7只-无储 正.png" data-alt="赤尾铂金至薄" role="tab" tabindex="0" aria-selected="false" style="font-size:1.5rem;background:var(--bg-card);border:1px solid var(--border-subtle);color:var(--text-tertiary);border-radius:var(--radius-md)">
+        <span aria-hidden="true">+</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VS COMPARISON ===== -->
+<section class="vs-section" aria-labelledby="vs-heading">
+  <div class="text-center" style="margin-bottom:var(--space-12)">
+    <div class="tag reveal">实力对比</div>
+    <h2 class="display-lg reveal reveal-d1" id="vs-heading">红科技 vs 国际标准</h2>
+    <p class="body-text reveal reveal-d2" style="color:var(--text-tertiary);margin:var(--space-3) auto 0;max-width:500px">
+      赤尾以制药级研发实力，在核心技术指标上全面超越
+    </p>
+  </div>
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="vs-table reveal reveal-d2" aria-label="技术指标对比表">
+      <thead>
+        <tr>
+          <th>技术指标</th>
+          <th class="highlight-col">赤尾红科技</th>
+          <th>行业标准</th>
+          <th>国际品牌</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>薄度</td><td class="win">28μm</td><td>50–70μm</td><td>35–45μm</td></tr>
+        <tr><td>材质</td><td class="win">聚氨酯 / 聚乙烯醇</td><td>天然乳胶</td><td>天然乳胶</td></tr>
+        <tr><td>制造标准</td><td class="win">制药级 GMP</td><td>医疗器械级</td><td>医疗器械级</td></tr>
+        <tr><td>国家发明专利</td><td class="win">15项</td><td>—</td><td>—</td></tr>
+        <tr><td>全球薄度纪录</td><td class="win">打破日本45年垄断</td><td>—</td><td>全球前十</td></tr>
+        <tr><td>防滑脱设计</td><td class="win">✓ 专利设计</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===== TIMELINE ===== -->
+<section class="timeline-section" aria-labelledby="timeline-heading">
+  <div class="text-center" style="margin-bottom:var(--space-16)">
+    <div class="tag reveal">品牌历程</div>
+    <h2 class="display-lg reveal reveal-d1" id="timeline-heading">从跟跑到领跑<br>中国红科技崛起之路</h2>
+  </div>
+  <div class="timeline-track">
+    <div class="timeline-line" aria-hidden="true"></div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot" aria-hidden="true"></div>
+      <div class="timeline-content">
+        <div class="timeline-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+        <div class="timeline-year">2014</div>
+        <h4>赤尾品牌创立</h4>
+        <p>朗圣药业旗下核心品牌，以制药级标准进入两性健康领域。</p>
+      </div>
+      <div class="timeline-spacer"></div>
+    </div>
+    <div class="timeline-item reveal reveal-d1">
+      <div class="timeline-dot" aria-hidden="true"></div>
+      <div class="timeline-spacer"></div>
+      <div class="timeline-content">
+        <div class="timeline-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="timeline-year">2018</div>
+        <h4>28μm 技术突破</h4>
+        <p>攻克超薄工艺难关，打破日本长达45年的乳胶薄度技术垄断。</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal reveal-d2">
+      <div class="timeline-dot" aria-hidden="true"></div>
+      <div class="timeline-content">
+        <div class="timeline-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="timeline-year">2024</div>
+        <h4>15项国家专利</h4>
+        <p>构建「赤尾红科技」硬核技术体系，覆盖材质、工艺、设计等多领域。</p>
+      </div>
+      <div class="timeline-spacer"></div>
+    </div>
+    <div class="timeline-item reveal reveal-d3">
+      <div class="timeline-dot" aria-hidden="true"></div>
+      <div class="timeline-spacer"></div>
+      <div class="timeline-content">
+        <div class="timeline-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+        <div class="timeline-year">2026</div>
+        <h4>天猫双奖加冕</h4>
+        <p>「年度科技创新品牌」+「年度无界增长爆品」，入选天猫宝藏新品牌。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== POLICY SUPPORT ===== -->
+<section style="padding:var(--section-pad);background:linear-gradient(180deg,var(--bg-dark),var(--bg-deep));position:relative;overflow:hidden;" aria-labelledby="policy-heading">
+  <!-- Decorative glow -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(200,16,46,.06),transparent 60%);pointer-events:none;" aria-hidden="true"></div>
+
+  <div style="max-width:var(--container);margin:0 auto;position:relative;">
+    <div class="text-center" style="margin-bottom:var(--space-16)">
+      <div class="tag reveal">政策支撑 · 国家战略</div>
+      <h2 class="display-lg reveal reveal-d1" id="policy-heading">生殖健康，国家在行动</h2>
+      <p class="body-text reveal reveal-d2" style="color:var(--text-tertiary);margin:var(--space-3) auto 0;max-width:560px">
+        赤尾以制药级品质与自主创新技术，直接服务于多项国家战略
+      </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);margin-bottom:var(--space-12);">
+      <!-- Policy Card 1 -->
+      <div class="reveal reveal-d1" style="padding:var(--space-8) var(--space-6);background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);transition:all .4s var(--ease-out-expo);position:relative;overflow:hidden;" onmouseenter="this.style.transform='translateY(-6px)';this.style.borderColor='rgba(200,16,46,.3)';this.style.boxShadow='0 0 40px rgba(200,16,46,.15)'" onmouseleave="this.style.transform='';this.style.borderColor='';this.style.boxShadow=''">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--brand-red),var(--brand-gold));" aria-hidden="true"></div>
+        <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);">
+          <span style="width:32px;height:32px;border-radius:50%;background:rgba(200,16,46,.12);display:flex;align-items:center;justify-content:center;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--brand-red-glow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M12 8v8M8 12h8"/></svg></span>
+          <span style="font-size:.65rem;color:var(--brand-red-glow);font-weight:600;letter-spacing:1.5px;">2016 · 国务院</span>
+        </div>
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:var(--space-3);line-height:1.5;">「健康中国2030」<br>规划纲要</h3>
+        <p style="font-size:.85rem;color:var(--text-secondary);line-height:1.9;">
+          明确将「减少不安全性行为」「普及避孕节育和生殖健康知识」列为国家战略，要求加强对性传播高危行为的综合干预。
+        </p>
+        <div style="margin-top:var(--space-4);padding-top:var(--space-4);border-top:1px solid var(--border-subtle);">
+          <p style="font-size:.78rem;color:var(--brand-gold-light);font-weight:500;line-height:1.7;">
+            赤尾以NMPA三类医疗器械品质，直接服务于国家生殖健康战略。
+          </p>
+        </div>
+      </div>
+
+      <!-- Policy Card 2 -->
+      <div class="reveal reveal-d2" style="padding:var(--space-8) var(--space-6);background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);transition:all .4s var(--ease-out-expo);position:relative;overflow:hidden;" onmouseenter="this.style.transform='translateY(-6px)';this.style.borderColor='rgba(200,16,46,.3)';this.style.boxShadow='0 0 40px rgba(200,16,46,.15)'" onmouseleave="this.style.transform='';this.style.borderColor='';this.style.boxShadow=''">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--brand-red),var(--brand-gold));" aria-hidden="true"></div>
+        <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);">
+          <span style="width:32px;height:32px;border-radius:50%;background:rgba(200,16,46,.12);display:flex;align-items:center;justify-content:center;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--brand-red-glow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <span style="font-size:.65rem;color:var(--brand-red-glow);font-weight:600;letter-spacing:1.5px;">2024 · 国务院</span>
+        </div>
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:var(--space-3);line-height:1.5;">艾滋病防控规划<br>（2024—2030）</h3>
+        <p style="font-size:.85rem;color:var(--text-secondary);line-height:1.9;">
+          要求「全面落实宾馆等公共场所摆放安全套」，综合干预覆盖率目标95%以上，继续将艾滋病控制在低流行水平。
+        </p>
+        <div style="margin-top:var(--space-4);padding-top:var(--space-4);border-top:1px solid var(--border-subtle);">
+          <p style="font-size:.78rem;color:var(--brand-gold-light);font-weight:500;line-height:1.7;">
+            赤尾以制药级品质助力国家公共卫生安全，是综合干预的品质保障。
+          </p>
+        </div>
+      </div>
+
+      <!-- Policy Card 3 -->
+      <div class="reveal reveal-d3" style="padding:var(--space-8) var(--space-6);background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);transition:all .4s var(--ease-out-expo);position:relative;overflow:hidden;" onmouseenter="this.style.transform='translateY(-6px)';this.style.borderColor='rgba(200,16,46,.3)';this.style.boxShadow='0 0 40px rgba(200,16,46,.15)'" onmouseleave="this.style.transform='';this.style.borderColor='';this.style.boxShadow=''">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--brand-red),var(--brand-gold));" aria-hidden="true"></div>
+        <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);">
+          <span style="width:32px;height:32px;border-radius:50%;background:rgba(200,16,46,.12);display:flex;align-items:center;justify-content:center;" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--brand-red-glow)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+          <span style="font-size:.65rem;color:var(--brand-red-glow);font-weight:600;letter-spacing:1.5px;">2020 · 国务院</span>
+        </div>
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:var(--space-3);line-height:1.5;">医疗器械监督<br>管理条例</h3>
+        <p style="font-size:.85rem;color:var(--text-secondary);line-height:1.9;">
+          避孕套列为三类医疗器械（最高监管等级），须经NMPA严格审批。条例明确国家支持医疗器械自主创新，创新产品优先审评。
+        </p>
+        <div style="margin-top:var(--space-4);padding-top:var(--space-4);border-top:1px solid var(--border-subtle);">
+          <p style="font-size:.78rem;color:var(--brand-gold-light);font-weight:500;line-height:1.7;">
+            赤尾15项国家发明专利，以自主创新响应国家「国产替代」战略。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary with counters -->
+    <div class="reveal" style="text-align:center;padding:var(--space-8) var(--space-6);background:rgba(200,16,46,.06);border:1px solid rgba(200,16,46,.12);border-radius:var(--radius-lg);">
+      <p style="font-size:.95rem;color:var(--text-primary);line-height:2;max-width:700px;margin:0 auto;font-weight:500;">
+        从「健康中国2030」到「艾滋病防控规划」，从「三类医疗器械监管」到「自主创新优先审评」— 赤尾以28μm技术突破和制药级品控，回应国家战略对生殖健康、疾病防控与国产技术突破的三重需求。
+      </p>
+      <div style="display:flex;justify-content:center;gap:var(--space-12);margin-top:var(--space-8);flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;font-weight:900;color:var(--brand-red-glow);" data-count="95">0</div>
+          <div style="font-size:.7rem;color:var(--text-tertiary);margin-top:var(--space-1);">% 干预覆盖率目标</div>
+        </div>
+        <div style="width:1px;background:var(--border-subtle);" aria-hidden="true"></div>
+        <div style="text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;font-weight:900;color:var(--brand-red-glow);" data-count="15">0</div>
+          <div style="font-size:.7rem;color:var(--text-tertiary);margin-top:var(--space-1);">项国家发明专利</div>
+        </div>
+        <div style="width:1px;background:var(--border-subtle);" aria-hidden="true"></div>
+        <div style="text-align:center;">
+          <div style="font-family:var(--font-display);font-size:2rem;font-weight:900;color:var(--brand-red-glow);" data-count="4">0</div>
+          <div style="font-size:.7rem;color:var(--text-tertiary);margin-top:var(--space-1);">项国家战略文件支撑</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STORE JUMP ===== -->
+<section class="store-jump" aria-labelledby="store-heading">
+  <div class="text-center" style="margin-bottom:var(--space-12)">
+    <div class="tag reveal">官方渠道</div>
+    <h2 class="display-lg reveal reveal-d1" id="store-heading">前往官方旗舰店</h2>
+  </div>
+  <div class="store-jump-grid reveal reveal-d2">
+    <a href="#" class="store-card store-card-tmall" target="_blank" rel="noopener">
+      <div>
+        <div class="store-name">天猫旗舰店</div>
+        <div class="store-desc">正品保障 · 满减优惠 · 极速发货</div>
+      </div>
+      <span class="store-arrow" aria-hidden="true">→</span>
+    </a>
+    <a href="#" class="store-card store-card-jd" target="_blank" rel="noopener">
+      <div>
+        <div class="store-name">京东自营旗舰店</div>
+        <div class="store-desc">京东物流 · 品质保障 · 售后无忧</div>
+      </div>
+      <span class="store-arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== COUPON ===== -->
+<section class="coupon-section" aria-labelledby="coupon-heading">
+  <div class="text-center" style="margin-bottom:var(--space-8)">
+    <div class="tag reveal" style="justify-content:center">限时优惠</div>
+    <h2 class="display-lg reveal reveal-d1" id="coupon-heading">领券立减</h2>
+    <p class="body-text reveal reveal-d1" style="color:var(--text-tertiary);margin-top:var(--space-2)">新人专享 · 限时福利</p>
+  </div>
+  <div class="coupon-grid">
+    <div class="coupon-card reveal reveal-d1">
+      <div class="coupon-tag">新人专享</div>
+      <div class="coupon-value">¥10 <small>满99可用</small></div>
+      <div class="coupon-label">新客首单立减</div>
+    </div>
+    <div class="coupon-card reveal reveal-d2">
+      <div class="coupon-tag">热卖</div>
+      <div class="coupon-value">¥30 <small>满199可用</small></div>
+      <div class="coupon-label">组合装特惠</div>
+    </div>
+    <div class="coupon-card reveal reveal-d3">
+      <div class="coupon-tag">限量</div>
+      <div class="coupon-value">¥50 <small>满299可用</small></div>
+      <div class="coupon-label">全家桶超值</div>
+    </div>
+  </div>
+  <p class="body-text reveal" style="color:var(--text-tertiary);margin-top:var(--space-6);font-size:.8rem">* 优惠券最终解释权归赤尾品牌所有</p>
+</section>
+
+<!-- ===== PRODUCT PARAMS ===== -->
+<section class="params-section" aria-labelledby="params-heading">
+  <div class="text-center" style="margin-bottom:var(--space-12)">
+    <div class="tag reveal">产品参数</div>
+    <h2 class="display-lg reveal reveal-d1" id="params-heading">规格详情</h2>
+  </div>
+  <table class="params-table reveal reveal-d2" aria-label="产品参数表">
+    <tbody>
+      <tr><td>产品名称</td><td>赤尾聚氨酯001避孕套</td></tr>
+      <tr><td>材质</td><td>聚氨酯（高分子合成材料）</td></tr>
+      <tr><td>薄度</td><td>001级（约0.01mm）</td></tr>
+      <tr><td>规格</td><td>3只装 / 7只装 / 12只装</td></tr>
+      <tr><td>执行标准</td><td>医疗器械注册证号：国械注准xxxxxxxx</td></tr>
+      <tr><td>生产厂家</td><td>朗圣药业有限公司</td></tr>
+      <tr><td>保质期</td><td>36个月（生产日期见包装）</td></tr>
+      <tr><td>贮藏条件</td><td>阴凉干燥处，避免阳光直射</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq-section" aria-labelledby="faq-heading">
+  <div class="text-center" style="margin-bottom:var(--space-12)">
+    <div class="tag reveal">常见问题</div>
+    <h2 class="display-lg reveal reveal-d1" id="faq-heading">你可能想了解</h2>
+  </div>
+  <div class="faq-list reveal reveal-d2" role="list">
+    <div class="faq-item" role="listitem">
+      <button class="faq-q" aria-expanded="false" aria-controls="faq-a1">
+        <span>赤尾聚氨酯001和普通乳胶避孕套有什么区别？</span>
+        <span class="faq-q-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" id="faq-a1" aria-hidden="true">
+        聚氨酯001采用高分子聚氨酯材料，相比传统乳胶材质更薄（001级薄度）、导热性更好、无乳胶气味，尤其适合乳胶过敏人群。赤尾是国内少数掌握聚氨酯避孕套量产技术的品牌之一。
+      </div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <button class="faq-q" aria-expanded="false" aria-controls="faq-a2">
+        <span>28微米有多薄？</span>
+        <span class="faq-q-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" id="faq-a2" aria-hidden="true">
+        28微米约等于头发丝直径的1/3。普通乳胶避孕套厚度约为50–70微米。赤尾铂金至薄系列将厚度控制在28微米，创造了国内乳胶避孕套的薄度纪录，并入选《Men's Health》全球十大超薄榜单。
+      </div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <button class="faq-q" aria-expanded="false" aria-controls="faq-a3">
+        <span>赤尾的产品安全吗？有质量认证吗？</span>
+        <span class="faq-q-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" id="faq-a3" aria-hidden="true">
+        赤尾全系产品遵循药品GMP生产标准，拥有15项国家发明专利，通过ISO 9001/13485等国际质量体系认证，以及中国NMPA（国家药品监督管理局）医疗器械注册认证，品质安全有保障。
+      </div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <button class="faq-q" aria-expanded="false" aria-controls="faq-a4">
+        <span>在哪里可以购买赤尾产品？</span>
+        <span class="faq-q-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" id="faq-a4" aria-hidden="true">
+        赤尾官方渠道包括：天猫赤尾旗舰店、京东赤尾自营店、赤尾官方小程序商城。也可在各大连锁药房（一心堂、老百姓、国大药房等）和便利店购买。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REVIEWS ===== -->
+<section class="reviews-section" aria-labelledby="reviews-heading">
+  <div class="text-center" style="margin-bottom:var(--space-12)">
+    <div class="tag reveal">用户评价</div>
+    <h2 class="display-lg reveal reveal-d1" id="reviews-heading">100万+ 真实用户的选择</h2>
+  </div>
+  <div class="reviews-grid" aria-label="用户评论">
+    <div class="review-card reveal reveal-d1">
+      <div class="review-stars" aria-label="5星好评">★★★★★</div>
+      <p class="review-text">用完赤尾的聚氨酯001，真的回不去了。以前觉得进口大牌已经够薄了，没想到国货还能更胜一筹，价格还亲民。支持中国智造！</p>
+      <div class="review-author">李先生</div>
+      <div class="review-meta">天猫旗舰店 · 复购用户</div>
+    </div>
+    <div class="review-card reveal reveal-d2">
+      <div class="review-stars" aria-label="5星好评">★★★★★</div>
+      <p class="review-text">第一次用无套感系列确实惊艳到了。几乎感觉不到存在但又很安心。赤尾让我对国货避孕套彻底改观。</p>
+      <div class="review-author">小陈同学</div>
+      <div class="review-meta">京东自营 · 复购3次</div>
+    </div>
+    <div class="review-card reveal reveal-d3">
+      <div class="review-stars" aria-label="5星好评">★★★★★</div>
+      <p class="review-text">制药级标准确实不一样，包装细节到使用体验都很有质感。我已经安利给身边所有朋友了。国货之光！</p>
+      <div class="review-author">匿名用户</div>
+      <div class="review-meta">小红书 · 真实体验分享</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="tech-spotlight" style="text-align:center" aria-labelledby="cta-heading">
+  <h2 class="display-lg reveal" id="cta-heading" style="margin-bottom:var(--space-3)">薄，不止于薄</h2>
+  <p class="body-text reveal reveal-d1" style="color:var(--text-tertiary);margin-bottom:var(--space-8)">赤尾红科技 — 让爱在探索中增进</p>
+  <a href="#top" class="btn-primary reveal reveal-d2" onclick="scrollToTop(event)" aria-label="返回顶部">返回顶部 ↑</a>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <nav class="footer-links" aria-label="底部导航">
+    <a href="#">天猫旗舰店</a>
+    <a href="#">京东自营</a>
+    <a href="#">品牌故事</a>
+    <a href="#">赤尾小红书</a>
+    <a href="#">消费者热线</a>
+  </nav>
+  <p class="footer-copy">© 2026 朗圣药业 · 赤尾品牌 | 本页面为2026第16届大广赛UI类参赛作品</p>
+</footer>
+
+<script>
+// ========== REVEAL ON SCROLL ==========
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})
+},{threshold:.12,rootMargin:'0px 0px -30px 0px'})
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))
+
+// ========== STICKY CTA ==========
+const stickyCta = document.getElementById('stickyCta')
+const heroRef = document.querySelector('.hero')
+let ctaObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    stickyCta.classList.toggle('visible',!e.isIntersecting)
+  })
+},{threshold:0})
+if(heroRef) ctaObserver.observe(heroRef)
+
+// ========== PRODUCT GALLERY ==========
+const mainImg = document.getElementById('galleryMainImg')
+document.querySelectorAll('.gallery-thumb[data-src]').forEach(thumb=>{
+  thumb.addEventListener('click',()=>{
+    const main = document.getElementById('galleryMainImg')
+    const oldSrc = main.src
+    main.src = thumb.dataset.src
+    main.alt = thumb.dataset.alt
+    main.style.opacity = '0'
+    main.style.transform = 'scale(1.05)'
+    requestAnimationFrame(()=>{
+      main.style.transition = 'all .4s cubic-bezier(.34,1.56,.64,1)'
+      main.style.opacity = '1'
+      main.style.transform = 'scale(1)'
+      setTimeout(()=>{main.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)'},400)
+    })
+    document.querySelectorAll('.gallery-thumb').forEach(t=>t.classList.remove('active'))
+    thumb.classList.add('active')
+  })
+  thumb.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')thumb.click()})
+})
+// Main image click to zoom
+document.getElementById('galleryMain').addEventListener('click',function(){
+  const img = document.getElementById('galleryMainImg')
+  img.style.transform = img.style.transform === 'scale(1.4)' ? 'scale(1)' : 'scale(1.4)'
+})
+
+// ========== FAQ ACCORDION ==========
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const expanded = btn.getAttribute('aria-expanded')==='true'
+    btn.setAttribute('aria-expanded',!expanded)
+    const panel = document.getElementById(btn.getAttribute('aria-controls'))
+    panel.setAttribute('aria-hidden',expanded)
+  })
+})
+
+// ========== UTILS ==========
+// ========== READING PROGRESS BAR ==========
+const progressBar = document.getElementById('progressBar')
+let ticking = false
+document.addEventListener('scroll',()=>{
+  if(!ticking){requestAnimationFrame(()=>{
+    const scrollTop = document.documentElement.scrollTop
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+    progressBar.style.width = (scrollTop / scrollHeight * 100) + '%'
+    ticking = false
+  });ticking = true}
+})
+
+// ========== SOCIAL PROOF TOAST ==========
+const socialProof = document.getElementById('socialProof')
+const socialMessages = [
+  {user:'广州 李先生', item:'聚氨酯001 3只装', action:'刚刚购买了'},
+  {user:'上海 王同学', item:'铂金至薄 7只装', action:'刚刚购买了'},
+  {user:'北京 小陈', item:'无套感 3只装', action:'刚刚购买了'},
+  {user:'深圳 赵先生', item:'聚氨酯001 7只装', action:'刚刚购买了'},
+  {user:'杭州 刘先生', item:'铂金至薄 12只装', action:'刚刚复购了'},
+  {user:'成都 周同学', item:'聚氨酯001 3只装', action:'刚刚购买了'},
+  {user:'武汉 吴先生', item:'铂金至薄 7只装', action:'刚刚购买了'},
+]
+let socialIndex = 0
+function showSocialToast(){
+  const msg = socialMessages[socialIndex % socialMessages.length]
+  socialIndex++
+  const el = document.createElement('div')
+  el.className = 'social-proof-item'
+  el.innerHTML = '<span class="avatar" aria-hidden="true">' + msg.user[0] + '</span><span><span class="action">' + msg.user + '</span> ' + msg.action + ' <strong>' + msg.item + '</strong></span>'
+  socialProof.appendChild(el)
+  setTimeout(()=>{
+    el.classList.add('social-proof-remove')
+    setTimeout(()=>el.remove(),400)
+  },4000)
+}
+// Start social proof after 2s
+setTimeout(showSocialToast,2000)
+setInterval(showSocialToast,6000)
+
+// ========== UTILS ==========
+function scrollToTop(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})}
+
+// ========== COUNTER ANIMATION ==========
+function animateCounters(){
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    if(el.dataset.animated) return
+    const target = parseInt(el.dataset.count)
+    const duration = 1800
+    const start = performance.now()
+    function step(now){
+      const progress = Math.min((now - start)/duration,1)
+      const eased = 1 - Math.pow(1 - progress,3)
+      el.textContent = Math.round(target * eased)
+      if(progress < 1) requestAnimationFrame(step)
+      else el.textContent = target
+    }
+    el.dataset.animated = 'true'
+    requestAnimationFrame(step)
+  })
+}
+const counterObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)animateCounters()})
+},{threshold:.3})
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const parent = el.closest('section') || el.parentElement
+  if(parent) counterObs.observe(parent)
+})
+
+// ========== CARD TILT EFFECT ==========
+document.querySelectorAll('.feature-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const rect = card.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    card.style.transform = `translateY(-6px) perspective(600px) rotateX(${-y*6}deg) rotateY(${x*6}deg)`
+  })
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform = ''
+  })
+})
+
+// ========== STAGGER REVEAL FOR GRID ITEMS ==========
+const staggerObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const items = e.target.querySelectorAll('.feature-card, .review-card, .coupon-card')
+      items.forEach((item,i)=>{
+        item.style.opacity = '0'
+        item.style.transform = 'translateY(24px)'
+        setTimeout(()=>{
+          item.style.transition = 'all .6s cubic-bezier(.16,1,.3,1)'
+          item.style.opacity = '1'
+          item.style.transform = 'translateY(0)'
+        }, i * 100)
+      })
+      staggerObs.unobserve(e.target)
+    }
+  })
+},{threshold:.15})
+document.querySelectorAll('.features-grid, .reviews-grid, .coupon-grid').forEach(g=>staggerObs.observe(g))
+
+// ========== SMOOTH SCROLL FOR ANCHOR LINKS ==========
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target = document.querySelector(a.getAttribute('href'))
+    if(target){
+      e.preventDefault()
+      target.scrollIntoView({behavior:'smooth',block:'start'})
+    }
+  })
+})
+
+// ========== PARALLAX ON HERO PRODUCT ==========
+const heroProduct = document.querySelector('.hero-product-img')
+if(heroProduct){
+  window.addEventListener('scroll',()=>{
+    const scrollY = window.scrollY
+    if(scrollY < 800){
+      heroProduct.style.transform = `translateY(${scrollY * 0.08}px)`
+    }
+  },{passive:true})
+}
+
+console.log('赤尾 · 薄系列详情页 — 升级版 loaded ✓')
+</script>
+</body>
+</html>
