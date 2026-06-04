@@ -884,6 +884,84 @@ body::after{
   </div>
 </section>
 
+<!-- ===== 3D INTERACTIVE MODULE ===== -->
+<section style="padding:80px 5%;background:#080808;position:relative;overflow:hidden">
+  <div style="max-width:1200px;margin:0 auto;text-align:center">
+    <p style="font-size:.7rem;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:12px">INTERACTIVE 3D</p>
+    <h2 style="font-family:'Noto Serif SC',serif;font-size:clamp(1.6rem,2.5vw,2.4rem);font-weight:700;color:#fff;margin-bottom:8px">3D 超薄技术展示</h2>
+    <p style="font-size:.9rem;color:rgba(255,255,255,.55);margin-bottom:32px">拖拽旋转 · 28μm层叠 · 科技粒子</p>
+    <div id="bao3d" style="width:100%;max-width:700px;height:450px;margin:0 auto;border-radius:16px;overflow:hidden;background:#080808;box-shadow:0 20px 60px rgba(0,0,0,0.5)"></div>
+    <p style="margin-top:16px;font-size:13px;color:#666;animation:pulse3d 2s ease-in-out infinite">拖拽旋转 · 滚轮缩放</p>
+  </div>
+</section>
+<style>@keyframes pulse3d{0%,100%{opacity:.4}50%{opacity:1}}</style>
+<script>
+(function(){
+  function init(){
+    var el=document.getElementById('bao3d');
+    if(!el||typeof THREE==='undefined')return;
+    if(el.querySelector('canvas'))return;
+    var w=el.clientWidth||700,h=el.clientHeight||450;
+    var scene=new THREE.Scene();
+    var cam=new THREE.PerspectiveCamera(45,w/h,0.1,1000);
+    var ren=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});ren.setSize(w,h);ren.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    el.appendChild(ren.domElement);
+    var ctrl=new THREE.OrbitControls(cam,ren.domElement);ctrl.enableDamping=true;ctrl.enablePan=false;
+    scene.add(new THREE.AmbientLight(0xffffff,0.5));
+    var dl=new THREE.DirectionalLight(0xffffff,1.5);dl.position.set(3,5,3);scene.add(dl);
+    
+  var rl2=new THREE.PointLight(0xd42426,2,8);rl2.position.set(0,2,2);scene.add(rl2);
+  var gl3=new THREE.PointLight(0xc9a84c,1,8);gl3.position.set(-3,1,-1);scene.add(gl3);
+  var lg=new THREE.Group();
+  for(var k=0;k<12;k++){
+    var hue=(k/12)*0.1;var c=new THREE.Color().setHSL(hue+0.95,0.8,0.3+k*0.04);
+    var layer=new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.2,0.015,64),new THREE.MeshStandardMaterial({color:c,metalness:0.3,roughness:0.4,transparent:true,opacity:0.8-k*0.04}));
+    layer.position.y=k*0.12-(12*0.12)/2;layer.userData={baseY:layer.position.y,idx:k};lg.add(layer);
+  }
+  var lc2=document.createElement('canvas');lc2.width=512;lc2.height=256;var lx2=lc2.getContext('2d');
+  lx2.clearRect(0,0,512,256);lx2.fillStyle='#D42426';lx2.font='bold 60px sans-serif';lx2.textAlign='center';lx2.fillText('28μm',256,100);
+  lx2.fillStyle='#C9A84C';lx2.font='24px sans-serif';lx2.fillText('改写全球薄度格局',256,160);
+  var lbl2=new THREE.Mesh(new THREE.PlaneGeometry(2,1),new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(lx2),transparent:true,side:THREE.DoubleSide}));
+  lbl2.position.y=0.8;lg.add(lbl2);scene.add(lg);
+  var pg3=new THREE.BufferGeometry(),pp3=new Float32Array(500*3);for(var m=0;m<1500;m++)pp3[m]=(Math.random()-0.5)*8;
+  pg3.setAttribute('position',new THREE.BufferAttribute(pp3,3));
+  var pts3=new THREE.Points(pg3,new THREE.PointsMaterial({color:0xd42426,size:0.015,transparent:true,opacity:0.7,sizeAttenuation:true}));scene.add(pts3);
+  var gnd3=new THREE.Mesh(new THREE.CircleGeometry(4,64),new THREE.MeshStandardMaterial({color:0x050505,metalness:0.9,roughness:0.15}));
+  gnd3.rotation.x=-Math.PI/2;gnd3.position.y=-1.2;scene.add(gnd3);
+  cam.position.set(0,2,4);
+  function animate(){requestAnimationFrame(animate);var t=Date.now()*0.001;
+    lg.children.forEach(function(ch){if(ch.userData.baseY!==undefined){var idx=ch.userData.idx;ch.position.y=ch.userData.baseY+Math.sin(t*2+idx*0.4)*0.03;ch.rotation.x=Math.sin(t+idx*0.5)*0.05;}});
+    lg.rotation.y+=0.003;ctrl.update();ren.render(scene,cam);}
+  animate();
+
+  }
+  if(typeof THREE!=='undefined'){init();return;}
+  var s=document.createElement('script');s.src='../lib/three.min.js';
+  s.onload=function(){
+    var s2=document.createElement('script');s2.src='../lib/OrbitControls.js';
+    s2.onload=init;document.head.appendChild(s2);
+  };
+  document.head.appendChild(s);
+})();
+</script>
+<!-- ===== END 3D MODULE ===== -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- ===== VS COMPARISON ===== -->
 <section class="vs-section" aria-labelledby="vs-heading">
   <div class="text-center" style="margin-bottom:var(--space-12)">
@@ -1406,5 +1484,7 @@ if(heroProduct){
 
 console.log('赤尾 · 薄系列详情页 — 升级版 loaded ✓')
 </script>
+
+
 </body>
 </html>
